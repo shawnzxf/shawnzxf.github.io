@@ -1,0 +1,20 @@
+---
+import { AUTHOR, GITHUB_URL } from '../consts';
+---
+
+<footer>
+	&copy; {new Date().getFullYear()} {AUTHOR} · <a href={GITHUB_URL}>GitHub</a>
+</footer>
+<style>
+	footer {
+		max-width: 900px;
+		margin: 3rem auto 0;
+		padding: 1.5rem 1.25rem 2.5rem;
+		border-top: 1px solid var(--border);
+		color: var(--muted);
+		font-size: 0.9rem;
+	}
+	a {
+		color: var(--muted);
+	}
+</style>

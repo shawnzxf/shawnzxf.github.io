@@ -1,0 +1,46 @@
+---
+import { SITE_TITLE } from '../consts';
+
+const path = Astro.url.pathname;
+const links = [
+	{ href: '/', label: 'Posts', active: path === '/' || path.startsWith('/posts') },
+	{ href: '/about/', label: 'About', active: path.startsWith('/about') },
+];
+---
+
+<header>
+	<nav>
+		<a class="site-title" href="/">{SITE_TITLE}</a>
+		<div class="links">
+			{links.map((l) => <a href={l.href} class:list={{ active: l.active }}>{l.label}</a>)}
+		</div>
+	</nav>
+</header>
+<style>
+	header {
+		border-bottom: 1px solid var(--border);
+	}
+	nav {
+		max-width: 900px;
+		margin: 0 auto;
+		padding: 0.9rem 1.25rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	a {
+		color: var(--fg);
+		text-decoration: none;
+	}
+	.site-title {
+		font-weight: 700;
+	}
+	.links a {
+		margin-left: 1.2rem;
+		color: var(--muted);
+	}
+	.links a.active,
+	.links a:hover {
+		color: var(--fg);
+	}
+</style>

@@ -1,0 +1,52 @@
+---
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import Base from '../layouts/Base.astro';
+import { getPosts } from '../posts';
+
+const posts = await getPosts();
+---
+
+<Base title={SITE_TITLE} description={SITE_DESCRIPTION}>
+	<h1>{SITE_TITLE}</h1>
+	<p class="sub">{SITE_DESCRIPTION}</p>
+	<ul class="post-list">
+		{posts.map((post) => (
+			<li>
+				<a href={`/posts/${post.id}/`}>{post.data.title}</a>
+				{post.data.draft && <strong> (draft)</strong>}
+				<div class="meta">
+					<FormattedDate date={post.data.pubDate} />
+					{post.data.tags.length > 0 && <> · {post.data.tags.join(', ')}</>}
+				</div>
+				<p>{post.data.description}</p>
+			</li>
+		))}
+	</ul>
+</Base>
+<style>
+	.sub {
+		color: var(--muted);
+		margin-top: 0;
+	}
+	.post-list {
+		list-style: none;
+		padding: 0;
+	}
+	.post-list li {
+		padding: 1rem 0;
+		border-bottom: 1px solid var(--border);
+	}
+	.post-list a {
+		font-size: 1.15rem;
+		font-weight: 600;
+		text-decoration: none;
+	}
+	.post-list p {
+		margin: 0.3rem 0 0;
+	}
+	.meta {
+		color: var(--muted);
+		font-size: 0.88rem;
+	}
+</style>
