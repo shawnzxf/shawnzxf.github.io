@@ -1,10 +1,11 @@
 ---
-import { AUTHOR, GITHUB_URL } from '../consts';
+import { AUTHOR, LINKEDIN_URL } from '../consts';
 import Base from '../layouts/Base.astro';
 ---
 
 <Base title="About" description={`About ${AUTHOR}`}>
 	<h1>About</h1>
-	<p>Hi, I'm {AUTHOR}. I write about ML systems, the math behind them, and the code that implements them.</p>
-	<p>Find me on <a href={GITHUB_URL}>GitHub</a>.</p>
+	<p>Hi, I'm {AUTHOR}, a software enginner at Amazon. I believe in the idea that if you can't explain it simply, you don't understand it well enough.</p>
+	<p>I write about ML, infra systems, the math behind them, and the code that implements them.</p>
+	<p>Find me on <a href={LINKEDIN_URL}>LinkedIn</a>.</p>
 </Base>

@@ -1,28 +1,19 @@
-/* GitHub-like palette with automatic dark mode. */
+/* Light-only palette; ivory background to match anthropic.com. */
 :root {
 	--fg: #1f2328;
 	--muted: #59636e;
-	--bg: #ffffff;
+	--bg: #faf9f5;
 	--card: #f6f8fa;
 	--accent: #0969da;
 	--ok: #1a7f37;
 	--warn: #9a6700;
 	--border: #d1d9e0;
-	color-scheme: light dark;
+	color-scheme: light;
+	/* Header/footer width, the same on every page so the top bar never shifts. */
+	--page-width: 1180px;
+	/* Main content width; posts use the full page width to fit the TOC sidebar. */
+	--content-width: 900px;
 }
-@media (prefers-color-scheme: dark) {
-	:root {
-		--fg: #e6edf3;
-		--muted: #9198a1;
-		--bg: #0d1117;
-		--card: #161b22;
-		--accent: #4493f8;
-		--ok: #3fb950;
-		--warn: #d29922;
-		--border: #3d444d;
-	}
-}
-
 body {
 	margin: 0;
 	font: 16px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
@@ -30,9 +21,13 @@ body {
 	background: var(--bg);
 }
 main {
-	max-width: 900px;
+	max-width: var(--content-width);
 	margin: 2rem auto;
 	padding: 0 1.25rem;
+}
+/* Posts: full width; the post layout sizes and centers its own columns. */
+main.wide {
+	max-width: none;
 }
 a {
 	color: var(--accent);
@@ -54,6 +49,20 @@ h3 {
 img {
 	max-width: 100%;
 	height: auto;
+}
+/* Post figures: 80% of the column width, centered. */
+article img {
+	display: block;
+	max-width: 80%;
+	margin: 1.25rem auto 0.5rem;
+}
+/* A muted note right after a figure is its caption. */
+article p:has(> img) + .muted {
+	text-align: center;
+}
+h4 {
+	font-size: 1rem;
+	margin-top: 1.4rem;
 }
 
 code {
@@ -113,13 +122,13 @@ blockquote {
 .box > :last-child {
 	margin-bottom: 0;
 }
-.box.ok {
+.box.green {
 	border-left: 4px solid var(--ok);
 }
-.box.warn {
+.box.amber {
 	border-left: 4px solid var(--warn);
 }
-.box.def {
+.box.blue {
 	border-left: 4px solid var(--accent);
 }
 .box table th {
@@ -132,7 +141,7 @@ blockquote {
 	letter-spacing: 0.04em;
 	color: var(--muted);
 }
-.why {
+.muted {
 	color: var(--muted);
 	font-size: 0.92rem;
 }

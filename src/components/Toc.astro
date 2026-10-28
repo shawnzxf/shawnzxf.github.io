@@ -1,0 +1,111 @@
+---
+export interface TocEntry {
+	depth: number;
+	slug: string;
+	/** Heading label as HTML, with inline math pre-rendered (see src/plugins/rehype-toc.mjs). */
+	html: string;
+}
+
+interface Props {
+	headings: TocEntry[];
+}
+
+const { headings } = Astro.props;
+---
+
+{headings.length > 0 && (
+	<nav class="toc" aria-label="Table of contents">
+		<p class="toc-title">Contents</p>
+		<ul>
+			{headings.map((h) => (
+				<li class={`depth-${h.depth}`}>
+					<a href={`#${h.slug}`} set:html={h.html} />
+				</li>
+			))}
+		</ul>
+	</nav>
+)}
+
+<script>
+	// Highlight the section currently being read.
+	const links = new Map(
+		[...document.querySelectorAll<HTMLAnchorElement>('.toc a')].map((a) => [
+			decodeURIComponent(a.hash.slice(1)),
+			a,
+		]),
+	);
+	const targets = [...links.keys()]
+		.map((id) => document.getElementById(id))
+		.filter((el): el is HTMLElement => el !== null);
+
+	function update() {
+		// The last heading above the top quarter of the viewport is the current section.
+		let current = targets[0];
+		for (const el of targets) {
+			if (el.getBoundingClientRect().top <= window.innerHeight / 4) current = el;
+			else break;
+		}
+		links.forEach((a) => a.classList.remove('active'));
+		if (current) links.get(current.id)?.classList.add('active');
+	}
+
+	if (targets.length > 0) {
+		update();
+		window.addEventListener('scroll', update, { passive: true });
+	}
+</script>
+
+<style>
+	/* Sticks at the vertical center of the viewport while the article scrolls. */
+	.toc {
+		position: sticky;
+		top: 50vh;
+		transform: translateY(-50%);
+		/* Leave room for the top bar when centered at the top of the page. */
+		max-height: calc(100vh - 8rem);
+		overflow-y: auto;
+		font-size: 0.85rem;
+		line-height: 1.4;
+	}
+	.toc-title {
+		margin: 0 0 0.6rem;
+		font-weight: 600;
+		font-size: 0.8rem;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: var(--muted);
+	}
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		border-left: 1px solid var(--border);
+	}
+	li {
+		margin: 0;
+	}
+	a {
+		display: block;
+		padding: 0.25rem 0 0.25rem 0.8rem;
+		margin-left: -1px;
+		border-left: 2px solid transparent;
+		color: var(--muted);
+		text-decoration: none;
+	}
+	.depth-3 a {
+		padding-left: 1.6rem;
+		font-size: 0.8rem;
+	}
+	.depth-4 a {
+		padding-left: 2.4rem;
+		font-size: 0.78rem;
+	}
+	a:hover {
+		color: var(--fg);
+	}
+	a.active {
+		color: var(--fg);
+		font-weight: 600;
+		border-left-color: var(--accent);
+	}
+</style>

@@ -1,6 +1,6 @@
 ---
 import FormattedDate from '../components/FormattedDate.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { HOME_HEADING, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import Base from '../layouts/Base.astro';
 import { getPosts } from '../posts';
 
@@ -8,21 +8,24 @@ const posts = await getPosts();
 ---
 
 <Base title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<h1>{SITE_TITLE}</h1>
+	<h1>{HOME_HEADING}</h1>
 	<p class="sub">{SITE_DESCRIPTION}</p>
-	<ul class="post-list">
+	<div class="post-list">
 		{posts.map((post) => (
-			<li>
-				<a href={`/posts/${post.id}/`}>{post.data.title}</a>
-				{post.data.draft && <strong> (draft)</strong>}
-				<div class="meta">
+			<article class="card">
+				<h2 class="card-title">
+					{post.data.title}
+					{post.data.draft && <span class="draft">draft</span>}
+				</h2>
+				<p class="card-date">
 					<FormattedDate date={post.data.pubDate} />
-					{post.data.tags.length > 0 && <> · {post.data.tags.join(', ')}</>}
-				</div>
-				<p>{post.data.description}</p>
-			</li>
+				</p>
+				<p class="card-summary">{post.data.summary}</p>
+				{/* Stretched link: makes the whole card clickable. */}
+				<a class="card-link" href={`/posts/${post.id}/`} aria-label={post.data.title}></a>
+			</article>
 		))}
-	</ul>
+	</div>
 </Base>
 <style>
 	.sub {
@@ -30,23 +33,64 @@ const posts = await getPosts();
 		margin-top: 0;
 	}
 	.post-list {
-		list-style: none;
+		margin-top: 2rem;
+	}
+	.card {
+		position: relative;
+		margin-bottom: 1.5rem;
+		padding: 1.5rem;
+		background: #fff;
+		border: 1px solid var(--border);
+		border-radius: 8px;
+		transition:
+			transform 0.1s,
+			box-shadow 0.15s;
+	}
+	.card:hover {
+		box-shadow: 0 4px 14px rgba(20, 20, 19, 0.08);
+	}
+	.card:active {
+		transform: scale(0.98);
+	}
+	.card-title {
+		margin: 0;
 		padding: 0;
+		border: 0;
+		font-size: 1.35rem;
+		line-height: 1.3;
 	}
-	.post-list li {
-		padding: 1rem 0;
-		border-bottom: 1px solid var(--border);
-	}
-	.post-list a {
-		font-size: 1.15rem;
-		font-weight: 600;
-		text-decoration: none;
-	}
-	.post-list p {
-		margin: 0.3rem 0 0;
-	}
-	.meta {
+	.card-date {
+		margin: 0.35rem 0 0;
 		color: var(--muted);
-		font-size: 0.88rem;
+		font-size: 0.82rem;
+	}
+	.card-summary {
+		margin: 0.6rem 0 0;
+		color: var(--muted);
+		font-size: 0.92rem;
+		/* Keep the summary to one line. */
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.card-link {
+		position: absolute;
+		inset: 0;
+		border-radius: 8px;
+	}
+	.card-link:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+	.draft {
+		margin-left: 0.5rem;
+		padding: 0.05rem 0.45rem;
+		border: 1px solid var(--warn);
+		border-radius: 999px;
+		color: var(--warn);
+		font-size: 0.72rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		vertical-align: middle;
 	}
 </style>

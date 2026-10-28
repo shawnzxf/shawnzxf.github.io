@@ -1,27 +1,66 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
+import Toc, { type TocEntry } from '../components/Toc.astro';
 import Base from './Base.astro';
 
-type Props = CollectionEntry<'posts'>['data'];
+type Props = CollectionEntry<'posts'>['data'] & { headings: TocEntry[] };
 
-const { title, description, pubDate, updatedDate, tags, draft } = Astro.props;
+const { title, summary, pubDate, updatedDate, tags, draft, headings } = Astro.props;
 ---
 
-<Base title={title} description={description}>
-	<article>
-		<h1>{title}</h1>
-		<p class="sub">{description}</p>
-		<p class="meta">
-			<FormattedDate date={pubDate} />
-			{updatedDate && <> · updated <FormattedDate date={updatedDate} /></>}
-			{tags.length > 0 && <> · {tags.map((t) => <span class="post-tag">{t}</span>)}</>}
-			{draft && <> · <strong>DRAFT</strong></>}
-		</p>
-		<slot />
-	</article>
+<Base title={title} description={summary} wide>
+	<div class="post-layout">
+		<aside>
+			<Toc headings={headings} />
+		</aside>
+		<article>
+			<h1>{title}</h1>
+			<p class="sub">{summary}</p>
+			<p class="meta">
+				<FormattedDate date={pubDate} />
+				{updatedDate && <> · updated <FormattedDate date={updatedDate} /></>}
+				{tags.length > 0 && <> · {tags.map((t) => <span class="post-tag">{t}</span>)}</>}
+				{draft && <> · <strong>DRAFT</strong></>}
+			</p>
+			<slot />
+		</article>
+	</div>
 </Base>
 <style>
+	/* Medium screens: TOC column + article, within the page width. */
+	.post-layout {
+		display: grid;
+		grid-template-columns: 220px minmax(0, 1fr);
+		gap: 3rem;
+		max-width: var(--page-width);
+		margin: 0 auto;
+	}
+	/* Wide screens: article centered at the home-page content width, TOC in the left margin. */
+	@media (min-width: 1480px) {
+		.post-layout {
+			grid-template-columns: minmax(0, 1fr) minmax(0, var(--content-width)) minmax(0, 1fr);
+			max-width: none;
+		}
+		/* TOC centered within the left margin. */
+		aside {
+			display: flex;
+			justify-content: center;
+			align-items: flex-start;
+		}
+		aside > :global(.toc) {
+			width: 220px;
+		}
+	}
+	/* Narrow screens: drop the sidebar, the article takes the full width. */
+	@media (max-width: 1000px) {
+		.post-layout {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		aside {
+			display: none;
+		}
+	}
 	h1 {
 		margin-bottom: 0.2rem;
 	}

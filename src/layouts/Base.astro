@@ -6,9 +6,11 @@ import Header from '../components/Header.astro';
 interface Props {
 	title: string;
 	description: string;
+	/** Use the full page width for content (posts, to fit the TOC sidebar). */
+	wide?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, wide = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -18,7 +20,7 @@ const { title, description } = Astro.props;
 	</head>
 	<body>
 		<Header />
-		<main>
+		<main class:list={{ wide }}>
 			<slot />
 		</main>
 		<Footer />

@@ -18,7 +18,7 @@ Add `src/content/posts/<slug>.md`; it is served at `/posts/<slug>/`.
 ```markdown
 ---
 title: 'Post title'
-description: 'One-line summary, shown under the title and in the post list.'
+summary: 'One-line summary: shown on the home page card, under the post title, and in search/link previews.'
 pubDate: 2026-10-24
 tags: [ml, math]
 draft: true        # optional; hidden in production
@@ -36,20 +36,28 @@ Prefer `.md` over `.mdx` for math-heavy posts (`{` and `<` are special in MDX). 
 ### Callout boxes
 
 ```markdown
-:::def[Optional label]
-Blue left border. Also `:::ok` (green), `:::warn` (amber), `:::box` (plain).
+:::blue[Optional label]
+Blue left border. Also `:::green`, `:::amber`, and `:::neutral` (plain gray box).
 :::
 
-:::why
-Muted side note.
+:::muted
+Muted side note (small gray text, no box). Inside a table cell use `<span class="muted">…</span>`.
 :::
 ```
 
-To nest a callout inside another, give the outer one more colons (`::::warn` … `::::`).
+To nest a callout inside another, give the outer one more colons (`::::amber` … `::::`).
 
 ### KaTeX macros
 
-Shared macros (`\q`, `\UK`, `\T`, …) live in `src/katex-macros.mjs` and work in every post.
+Shortcuts are per post: declare them in the post's frontmatter and they apply to that post only.
+
+```yaml
+macros:
+  '\R': '\mathbb{R}'
+  '\T': '^{\top}'
+```
+
+After changing anything under `src/plugins/` or `astro.config.mjs`, restart the dev server with `npx astro dev --force` (Astro caches rendered posts).
 
 ## Deploy
 

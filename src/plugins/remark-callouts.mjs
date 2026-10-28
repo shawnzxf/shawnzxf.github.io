@@ -1,23 +1,28 @@
 // Turns `:::name[optional label]` container directives into styled callout boxes.
 //
-//   :::def[Definition]      ->  <div class="box def"><p class="tag">Definition</p>...</div>
-//   :::why                  ->  <div class="why">...</div>   (muted side note)
+//   :::blue[Definition]     ->  <div class="box blue"><p class="tag">Definition</p>...</div>
+//   :::muted                ->  <div class="muted">...</div>   (muted side note, no box)
 //
 // Unknown `:name` text/leaf directives (e.g. "ratio 3:x") are turned back into
 // plain text so remark-directive doesn't silently swallow them.
 import { visit } from 'unist-util-visit';
 
-const BOXES = new Set(['box', 'def', 'ok', 'warn']);
+// Directive name -> CSS class (styles in src/styles/global.css).
+const CALLOUTS = {
+	blue: 'box blue',
+	green: 'box green',
+	amber: 'box amber',
+	neutral: 'box',
+	muted: 'muted',
+};
 
 export default function remarkCallouts() {
 	return (tree) => {
 		visit(tree, (node, index, parent) => {
-			if (node.type === 'containerDirective' && (BOXES.has(node.name) || node.name === 'why')) {
+			if (node.type === 'containerDirective' && Object.hasOwn(CALLOUTS, node.name)) {
 				const data = (node.data ||= {});
 				data.hName = 'div';
-				data.hProperties = {
-					class: node.name === 'why' ? 'why' : node.name === 'box' ? 'box' : `box ${node.name}`,
-				};
+				data.hProperties = { class: CALLOUTS[node.name] };
 				const first = node.children[0];
 				if (first?.data?.directiveLabel) {
 					first.data.hName = 'p';
