@@ -1,16 +1,17 @@
 ---
 import { SITE_TITLE } from '../consts';
+import { stripBase, url } from '../url';
 
-const path = Astro.url.pathname;
+const path = stripBase(Astro.url.pathname);
 const links = [
-	{ href: '/', label: 'Posts', active: path === '/' || path.startsWith('/posts') },
-	{ href: '/about/', label: 'About', active: path.startsWith('/about') },
+	{ href: url('/'), label: 'Posts', active: path === '/' || path.startsWith('/posts') },
+	{ href: url('/about/'), label: 'About', active: path.startsWith('/about') },
 ];
 ---
 
 <header>
 	<nav>
-		<a class="site-title" href="/">{SITE_TITLE}</a>
+		<a class="site-title" href={url('/')}>{SITE_TITLE}</a>
 		<div class="links">
 			{links.map((l) => <a href={l.href} class:list={{ active: l.active }}>{l.label}</a>)}
 		</div>

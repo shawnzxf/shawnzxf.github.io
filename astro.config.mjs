@@ -12,8 +12,8 @@ import rehypeToc from './src/plugins/rehype-toc.mjs';
 
 // https://astro.build/config
 export default defineConfig({
-	// TODO: replace with your GitHub Pages URL, e.g. https://<username>.github.io
-	site: 'https://xiufengzhao.github.io',
+	// GitHub Pages user site (repo shawnzxf/shawnzxf.github.io), served at the domain root.
+	site: 'https://shawnzxf.github.io',
 	integrations: [mdx(), sitemap()],
 	markdown: {
 		// remark/rehype pipeline (Astro's default Sätteri processor can't run these plugins).

@@ -3,6 +3,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 import { HOME_HEADING, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import Base from '../layouts/Base.astro';
 import { getPosts } from '../posts';
+import { url } from '../url';
 
 const posts = await getPosts();
 ---
@@ -22,7 +23,7 @@ const posts = await getPosts();
 				</p>
 				<p class="card-summary">{post.data.summary}</p>
 				{/* Stretched link: makes the whole card clickable. */}
-				<a class="card-link" href={`/posts/${post.id}/`} aria-label={post.data.title}></a>
+				<a class="card-link" href={url(`/posts/${post.id}/`)} aria-label={post.data.title}></a>
 			</article>
 		))}
 	</div>
