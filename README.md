@@ -1,4 +1,4 @@
-# Personal blog
+# Xiufeng's Personal blog
 
 Astro static site with KaTeX math, deployed to GitHub Pages.
 
@@ -60,9 +60,5 @@ macros:
 After changing anything under `src/plugins/` or `astro.config.mjs`, restart the dev server with `npx astro dev --force` (Astro caches rendered posts).
 
 ## Deploy
-
-1. Create a GitHub repo named `<username>.github.io` and push this project to `main`.
-2. In the repo: **Settings → Pages → Source: GitHub Actions**.
-3. Set `site` in `astro.config.mjs` and personalize `src/consts.ts`.
 
 Every push to `main` runs `.github/workflows/deploy.yml` and publishes the site.
