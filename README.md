@@ -1,5 +1,7 @@
 # Xiufeng's Personal blog
 
+Blog link: https://shawnzxf.github.io/
+
 Astro static site with KaTeX math, deployed to GitHub Pages.
 
 ## Develop
