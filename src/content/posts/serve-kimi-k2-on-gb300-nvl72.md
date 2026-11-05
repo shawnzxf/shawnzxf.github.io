@@ -6,15 +6,6 @@ tags: [kimi, GB300 NVL72, serving system]
 draft: false
 ---
 
-<!-- This post designs a serving system for a 1T-parameter MoE model on one GB300 NVL72 rack, for two workloads: a latency-bound coding agent and offline batch inference. The method is the same for both:
-
-1. Derive a handful of numbers: weight bytes, KV bytes, FLOPs per request, and time per request at effective rates.
-2. Find the binding constraint.
-3. Pick the architecture, then the parallelism, then size it.
-4. Rank the optimizations by how much they move the binding constraint.
-
-All numbers are first-order estimates (±30%). Every one is shown as a formula first, then with numbers plugged in. -->
-
 ## Setup
 
 ### Model: Kimi K2.6
