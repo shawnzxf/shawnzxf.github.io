@@ -146,18 +146,21 @@ blockquote {
 	font-size: 0.92rem;
 }
 
-/* Collapsible side Q&A (:::qa[Question?]). No box, so it doesn't read as a separator. */
+/* Collapsible side Q&A (:::qa[Question?]). Thin outline box with a light green title bar. */
 .qa {
-	margin: 0.6rem 0 1rem;
+	margin: 0.8rem 0 1rem;
+	border: 1px solid var(--border);
+	border-radius: 6px;
 }
 .qa > summary {
 	cursor: pointer;
 	list-style: none;
-	width: fit-content;
 	display: flex;
 	align-items: baseline;
-	gap: 0.45rem;
-	padding: 0.15rem 0;
+	gap: 0.5rem;
+	padding: 0.45rem 0.9rem;
+	border-radius: 5px;
+	background: #eef7f0;
 }
 .qa > summary::-webkit-details-marker {
 	display: none;
@@ -169,14 +172,15 @@ blockquote {
 	font-size: 0.75rem;
 	font-weight: 700;
 	line-height: 1.4;
-	color: var(--accent);
-	border: 1px solid var(--accent);
+	color: var(--ok);
+	border: 1px solid var(--ok);
 	border-radius: 4px;
 	padding: 0 0.3rem;
 }
 .qa > summary::after {
 	content: '▸';
 	flex: none;
+	margin-left: auto;
 	font-size: 0.8em;
 	color: var(--muted);
 	transition: transform 0.15s;
@@ -184,21 +188,18 @@ blockquote {
 .qa[open] > summary::after {
 	transform: rotate(90deg);
 }
-.qa-q {
-	text-decoration: underline dotted var(--muted);
-	text-underline-offset: 0.25em;
-	text-decoration-thickness: 1px;
-}
 .qa > summary:hover {
-	color: var(--accent);
+	background: #e2f2e6;
 }
 .qa > summary:hover .qa-q {
-	text-decoration: underline solid var(--accent);
+	color: var(--ok);
+}
+.qa[open] > summary {
+	border-bottom: 1px solid var(--border);
+	border-radius: 5px 5px 0 0;
 }
 .qa-body {
-	margin: 0.3rem 0 0 0.3rem;
-	padding: 0.1rem 0 0.1rem 1rem;
-	border-left: 2px solid var(--border);
+	padding: 0.1rem 0.9rem 0.3rem;
 }
 
 /* Assumption / modelling-choice note (:::assume[Label]). Quiet: thin rule + small label. */
