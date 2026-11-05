@@ -146,6 +146,83 @@ blockquote {
 	font-size: 0.92rem;
 }
 
+/* Collapsible side Q&A (:::qa[Question?]). No box, so it doesn't read as a separator. */
+.qa {
+	margin: 0.6rem 0 1rem;
+}
+.qa > summary {
+	cursor: pointer;
+	list-style: none;
+	width: fit-content;
+	display: flex;
+	align-items: baseline;
+	gap: 0.45rem;
+	padding: 0.15rem 0;
+}
+.qa > summary::-webkit-details-marker {
+	display: none;
+}
+.qa > summary::before {
+	content: 'Q';
+	flex: none;
+	align-self: center;
+	font-size: 0.75rem;
+	font-weight: 700;
+	line-height: 1.4;
+	color: var(--accent);
+	border: 1px solid var(--accent);
+	border-radius: 4px;
+	padding: 0 0.3rem;
+}
+.qa > summary::after {
+	content: '▸';
+	flex: none;
+	font-size: 0.8em;
+	color: var(--muted);
+	transition: transform 0.15s;
+}
+.qa[open] > summary::after {
+	transform: rotate(90deg);
+}
+.qa-q {
+	text-decoration: underline dotted var(--muted);
+	text-underline-offset: 0.25em;
+	text-decoration-thickness: 1px;
+}
+.qa > summary:hover {
+	color: var(--accent);
+}
+.qa > summary:hover .qa-q {
+	text-decoration: underline solid var(--accent);
+}
+.qa-body {
+	margin: 0.3rem 0 0 0.3rem;
+	padding: 0.1rem 0 0.1rem 1rem;
+	border-left: 2px solid var(--border);
+}
+
+/* Assumption / modelling-choice note (:::assume[Label]). Quiet: thin rule + small label. */
+.assume {
+	margin: 1rem 0;
+	padding: 0.1rem 0 0.1rem 0.9rem;
+	border-left: 2px dashed var(--border);
+	color: var(--muted);
+}
+.assume > :last-child {
+	margin-bottom: 0;
+}
+.assume-tag + * {
+	margin-top: 0;
+}
+.assume-tag {
+	margin: 0 0 0.35rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--muted);
+}
+
 /* Long display equations scroll instead of overflowing. */
 .katex-display {
 	overflow-x: auto;
