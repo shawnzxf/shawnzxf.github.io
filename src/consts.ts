@@ -1,6 +1,6 @@
 // TODO: personalize.
 export const SITE_TITLE = 'Xiufeng\'s Notes';
-export const SITE_DESCRIPTION = 'I am Xiufeng Zhao. I write notes on ML, systems, math, and code.';
+export const SITE_DESCRIPTION = 'I am Xiufeng Zhao. I write notes on LLM, ML system, math, and code.';
 export const AUTHOR = 'Xiufeng Zhao';
 // Big heading on the home page (the site title is already in the top bar).
 export const HOME_HEADING = "👋 Welcome to Xiufeng's Notes!";
