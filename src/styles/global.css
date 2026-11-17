@@ -56,8 +56,14 @@ article img {
 	max-width: 80%;
 	margin: 1.25rem auto 0.5rem;
 }
+/* :::wide figures use the full column width. */
+article .wide img {
+	max-width: 100%;
+}
 /* A muted note right after a figure is its caption. */
-article p:has(> img) + .muted {
+article p:has(> img) + .muted,
+article .wide + .muted,
+article table + .muted {
 	text-align: center;
 }
 h4 {
@@ -89,6 +95,12 @@ table {
 	border-collapse: collapse;
 	margin: 1rem 0;
 	font-size: 0.92rem;
+}
+/* Post tables: centered like figures; still scroll horizontally when too wide. */
+article table {
+	width: fit-content;
+	max-width: 100%;
+	margin: 1rem auto;
 }
 th,
 td {

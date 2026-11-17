@@ -2,6 +2,7 @@
 //
 //   :::blue[Definition]     ->  <div class="box blue"><p class="tag">Definition</p>...</div>
 //   :::muted                ->  <div class="muted">...</div>   (muted side note, no box)
+//   :::wide                 ->  <div class="wide">...</div>    (full-column-width figure)
 //   :::qa[Question?]        ->  <details class="qa"><summary>Question?</summary>...</details>
 //                               (collapsible side Q&A, closed by default)
 //   :::assume[Label]        ->  <div class="assume"><p class="assume-tag">Label</p>...</div>
@@ -18,6 +19,7 @@ const CALLOUTS = {
 	amber: 'box amber',
 	neutral: 'box',
 	muted: 'muted',
+	wide: 'wide',
 };
 
 export default function remarkCallouts() {
